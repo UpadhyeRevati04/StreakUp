@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StreakUp 🌸</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/x-icon"        href="favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180"    href="apple-touch-icon.png" />
+</head>
+<body>
+
+  <!-- ══════════════ HEADER ══════════════ -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="header-left">
+        <span class="logo-bloom">🌸</span>
+        <div>
+          <h1 class="app-title" id="app-title">StreakUp</h1>
+          <p class="app-subtitle">Our little journey, one day at a time</p>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="progress-pill">
+          <span id="overall-progress-label">0 / — days completed</span>
+          <div class="progress-track"><div class="progress-fill" id="overall-progress-bar"></div></div>
+        </div>
+        <button class="btn-outline" id="manage-btn">✏️ Habits</button>
+        <button class="btn-outline" id="settings-btn">⚙️ Settings</button>
+        <button class="btn-outline danger" id="reset-btn">↺ Reset</button>
+      </div>
+    </div>
+    <div class="banner"><span id="banner-text"></span></div>
+  </header>
+
+  <!-- ══════════════ TODAY HERO ══════════════ -->
+  <section class="today-hero" id="today-hero">
+    <div class="today-hero-inner">
+      <div class="today-label-row">
+        <div class="today-pill">TODAY</div>
+        <h2 class="today-day-num" id="today-day-num">Day 1</h2>
+        <p class="today-sub" id="today-sub">Loading…</p>
+      </div>
+      <div class="today-chips" id="today-task-chips"></div>
+    </div>
+  </section>
+
+  <!-- ══════════════ SPREADSHEET ══════════════ -->
+  <main class="sheet-container">
+    <div class="sheet-scroll-hint">← Scroll horizontally to see all days →</div>
+    <div class="sheet-wrapper" id="sheet-wrapper">
+      <table class="sheet" id="sheet">
+        <thead id="sheet-head"></thead>
+        <tbody id="sheet-body"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- ══════════════ STATS ══════════════ -->
+  <footer class="stats-footer">
+    <div class="stats-grid" id="stats-grid"></div>
+    <p class="footer-love">Made with 🤍 — You're doing amazing, sweetheart.</p>
+  </footer>
+
+  <!-- ══════════════ TOAST ══════════════ -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ══════════════ RESET MODAL ══════════════ -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <p class="modal-emoji">🥺</p>
+      <h3 class="modal-title">Start fresh, love?</h3>
+      <p class="modal-body">This will erase all your beautiful progress. Are you sure?</p>
+      <div class="modal-actions">
+        <button class="btn-cancel" id="modal-cancel">No, keep going!</button>
+        <button class="btn-confirm" id="modal-confirm">Yes, reset</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ SETTINGS MODAL ══════════════ -->
+  <div class="modal-overlay" id="settings-overlay">
+    <div class="modal modal-wide">
+      <button class="modal-x" id="settings-close">✕</button>
+      <p class="modal-emoji">⚙️</p>
+      <h3 class="modal-title">Challenge Settings</h3>
+      <p class="modal-body">Choose the length of your challenge. This will restart your progress.</p>
+
+      <div class="duration-grid" id="duration-grid">
+        <button class="dur-btn" data-days="21">
+          <span class="dur-num">21</span><span class="dur-label">Days</span>
+          <span class="dur-tag">Quick Sprint</span>
+        </button>
+        <button class="dur-btn" data-days="30">
+          <span class="dur-num">30</span><span class="dur-label">Days</span>
+          <span class="dur-tag">One Month</span>
+        </button>
+        <button class="dur-btn" data-days="60">
+          <span class="dur-num">60</span><span class="dur-label">Days</span>
+          <span class="dur-tag">Power Run</span>
+        </button>
+        <button class="dur-btn active" data-days="75">
+          <span class="dur-num">75</span><span class="dur-label">Days</span>
+          <span class="dur-tag">Hard 75 🔥</span>
+        </button>
+        <button class="dur-btn" data-days="90">
+          <span class="dur-num">90</span><span class="dur-label">Days</span>
+          <span class="dur-tag">Master Run</span>
+        </button>
+        <button class="dur-btn" data-days="100">
+          <span class="dur-num">100</span><span class="dur-label">Days</span>
+          <span class="dur-tag">Century 🏆</span>
+        </button>
+      </div>
+
+      <p class="settings-warning" id="settings-warning" style="display:none;">
+        ⚠️ Changing duration will reset all progress and restart your challenge.
+      </p>
+
+      <div class="modal-actions" style="margin-top:20px;">
+        <button class="btn-cancel" id="settings-cancel">Cancel</button>
+        <button class="btn-confirm" id="settings-save">Apply & Restart</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ HABITS MODAL ══════════════ -->
+  <div class="modal-overlay" id="habits-overlay">
+    <div class="modal modal-wide">
+      <button class="modal-x" id="habits-close">✕</button>
+      <p class="modal-emoji">✏️</p>
+      <h3 class="modal-title">Manage Your Habits</h3>
+      <p class="modal-body">Add, edit, or remove the habits you want to track every day.</p>
+
+      <div class="habits-warning" id="habits-warning" style="display:none;">
+        ⚠️ Removing a habit will delete its saved data. This cannot be undone.
+      </div>
+
+      <div class="habits-list" id="habits-list"></div>
+
+      <!-- Add new habit row -->
+      <div class="add-habit-row">
+        <input type="text" class="habit-icon-input" id="new-habit-icon" placeholder="😊" maxlength="2" />
+        <input type="text" class="habit-label-input" id="new-habit-label" placeholder="Type a new habit…" maxlength="50" />
+        <button class="btn-add-habit" id="btn-add-habit">+ Add</button>
+      </div>
+
+      <div class="modal-actions" style="margin-top:16px;">
+        <button class="btn-cancel" id="habits-cancel">Cancel</button>
+        <button class="btn-confirm" id="habits-save">Save Habits</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
